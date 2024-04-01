@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inspiration App</title>
+<link rel="stylesheet" href="styles2.css">
+</head>
+<body>
+<div class="container">
+  <h1>Inspiration of the Day</h1>
+  <div id="quoteContainer">
+    <p id="quoteText">Loading...</p>
+    <button id="shareButton" onclick="shareQuote()">Share</button>
+  </div>
+  <h2>Your Favorite Quotes</h2>
+  <ul id="favoriteQuotes"></ul>
+</div>
+
+<script>
+// Array of inspirational quotes
+const quotes = [
+  "The only way to do great work is to love what you do. - Steve Jobs",
+  "Believe you can and you're halfway there. - Theodore Roosevelt",
+  "It does not matter how slowly you go as long as you do not stop. - Confucius",
+  "The future belongs to those who believe in the beauty of their dreams. - Eleanor Roosevelt",
+  // Add more quotes as needed
+];
+
+// Function to get a random quote from the quotes array
+function getRandomQuote() {
+  return quotes[Math.floor(Math.random() * quotes.length)];
+}
+
+// Function to display a new quote
+function displayNewQuote() {
+  const quoteText = document.getElementById('quoteText');
+  quoteText.innerText = getRandomQuote();
+}
+
+// Function to share the current quote
+function shareQuote() {
+  const currentQuote = document.getElementById('quoteText').innerText;
+  // Code to share the quote via messaging or social media
+  alert("Share this quote: " + currentQuote);
+}
+
+// Function to save a quote as favorite
+function saveFavorite() {
+  const currentQuote = document.getElementById('quoteText').innerText;
+  const favoriteQuotes = JSON.parse(localStorage.getItem('favoriteQuotes')) || [];
+  favoriteQuotes.push(currentQuote);
+  localStorage.setItem('favoriteQuotes', JSON.stringify(favoriteQuotes));
+  displayFavoriteQuotes();
+}
+
+// Function to display favorite quotes
+function displayFavoriteQuotes() {
+  const favoriteQuotes = JSON.parse(localStorage.getItem('favoriteQuotes')) || [];
+  const favoriteQuotesList = document.getElementById('favoriteQuotes');
+  favoriteQuotesList.innerHTML = '';
+  favoriteQuotes.forEach(quote => {
+    const li = document.createElement('li');
+    li.textContent = quote;
+    favoriteQuotesList.appendChild(li);
+  });
+}
+
+// Display a new quote on app launch
+displayNewQuote();
+
+// Display favorite quotes on app launch
+displayFavoriteQuotes();
+</script>
+</body>
+</html>
